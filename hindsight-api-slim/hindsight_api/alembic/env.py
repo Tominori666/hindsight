@@ -72,7 +72,8 @@ def get_database_url() -> str:
         database_url = database_url.replace("postgres+asyncpg://", "postgresql://", 1)
 
     # Update config with processed URL for engine_from_config to use
-    config.set_main_option("sqlalchemy.url", database_url)
+    # Escape % as %% for configparser interpolation (e.g. %21 in URL-encoded passwords)
+    config.set_main_option("sqlalchemy.url", database_url.replace("%", "%%"))
 
     return database_url
 
