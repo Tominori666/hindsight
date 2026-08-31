@@ -1,0 +1,16 @@
+[Unit]
+Description=Hindsight API
+After=network.target
+
+[Service]
+User=tonyq
+ExecStart=/home/tonyq/hindsight-venv/bin/hindsight-api
+WorkingDirectory=/mnt/d/claude code test/hindsight/hindsight-api-slim
+EnvironmentFile=/mnt/d/claude code test/hindsight/.env
+Environment=PATH=/home/tonyq/.local/bin:/usr/local/bin:/usr/bin:/bin
+Environment=HF_HUB_OFFLINE=1
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

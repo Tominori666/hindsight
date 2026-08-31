@@ -138,7 +138,8 @@ def _run_migrations_internal(database_url: str, script_location: str, schema: st
     alembic_cfg.set_main_option("script_location", script_location)
 
     # Set the database URL
-    alembic_cfg.set_main_option("sqlalchemy.url", database_url)
+    # Escape % as %% for configparser interpolation (e.g. %21 in URL-encoded passwords)
+    alembic_cfg.set_main_option("sqlalchemy.url", database_url.replace("%", "%%"))
 
     # Configure logging (optional, but helps with debugging)
     # Uses Python's logging system instead of alembic.ini
